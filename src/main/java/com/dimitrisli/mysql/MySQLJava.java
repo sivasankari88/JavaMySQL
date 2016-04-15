@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class MySQLJava {
 
 	enum TestTableColumns{
-		id,TEXT;
+		film_id,title;
 	}
 	
 	private final String jdbcDriverStr;
@@ -30,11 +30,11 @@ public class MySQLJava {
 			Class.forName(jdbcDriverStr);
 			connection = DriverManager.getConnection(jdbcURL);
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select * from javaTestDB.test_table;");
+			resultSet = statement.executeQuery("select * from sakila.film;");
 			getResultSet(resultSet);
-			preparedStatement = connection.prepareStatement("insert into javaTestDB.test_table values (default,?)");
+			/*preparedStatement = connection.prepareStatement("insert into javaTestDB.test_table values (default,?)");
 			preparedStatement.setString(1,"insert test from java");
-			preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();*/
 		}finally{
 			close();
 		}
@@ -42,8 +42,8 @@ public class MySQLJava {
 	
 	private void getResultSet(ResultSet resultSet) throws Exception {
 		while(resultSet.next()){
-			Integer id = resultSet.getInt(TestTableColumns.id.toString());
-			String text = resultSet.getString(TestTableColumns.TEXT.toString());
+			Integer id = resultSet.getInt(TestTableColumns.film_id.toString());
+			String text = resultSet.getString(TestTableColumns.title.toString());
 			System.out.println("id: "+id);
 			System.out.println("text: "+text);
 		}
